@@ -2,7 +2,7 @@
 
 React-Native plugin for the bluetooth ESC/POS & TSC printers.
 
-If your are using this lib. The code example on file example.js can help you.
+If your are using this lib. The code example on file `BluetoothConfig.js` can help you.
 
 ## Installation
 ### Step 1 ###
