@@ -26,8 +26,7 @@ import {
 import {
   Header
 } from 'react-native-elements';
-import HamburgerMenu from '../components/HamburguerMenu';
-import { showError } from '../components/Alerts';
+import { Alert } from 'react-native';
 
 const {
   height,
@@ -59,7 +58,7 @@ export default class BluetoothConfig extends Component {
         loading: false
       });
     }, (err) => {
-      showError(err);
+      Alert(err);
     });
 
     if (Platform.OS === 'ios') {
@@ -105,12 +104,6 @@ export default class BluetoothConfig extends Component {
     this._getData();
   }
 
-  componentWillUnmount() {
-    //  for (let ls in this._listeners) {
-    //    this._listeners[ls].remove();
-    //  }
-  }
-
   _deviceAlreadPaired = (rsp) => {
     let ds = null;
     if (typeof (rsp.devices) === 'object') {
@@ -140,7 +133,7 @@ export default class BluetoothConfig extends Component {
         r = JSON.parse(rsp.device);
       }
     } catch (e) {
-      showError(e);
+      Alert(e);
     }
     if (r) {
       const found = this.state.foundDs || [];
@@ -168,7 +161,7 @@ export default class BluetoothConfig extends Component {
         });
       } catch (e) {
         // error reading value
-        showError(`err: ${e}`);
+        Alert(`err: ${e}`);
       }
     }
 
@@ -182,7 +175,7 @@ export default class BluetoothConfig extends Component {
         await AsyncStorage.setItem('@dataprinter',JSON.stringify(NewData));
       } catch (error) {
         // Error saving data
-        showError(`err: ${error}`);
+        Alert(`err: ${error}`);
       }
     };
 
@@ -213,7 +206,7 @@ export default class BluetoothConfig extends Component {
                   this.setState({
                     loading: false
                   })
-                  showError(e);
+                  Alert(e);
                 })
               }}
             >
@@ -266,18 +259,14 @@ export default class BluetoothConfig extends Component {
           this.setState({
             loading: false
           });
-          showError(`error${JSON.stringify(er)}`);
+          Alert(`error${JSON.stringify(er)}`);
         });
     }
 
     render() {
       return (
         <Container>
-          <Header
-            leftComponent={<HamburgerMenu navigation={this.props.navigation} />}
-            centerComponent={{ text: 'Configuração Impressora', style: { color: '#FFF' }, fontFamily: 'Nexa Light' }}
-            containerStyle={{ backgroundColor: '#B8D05B' }}
-          />
+          {/* Here you can use your menu */}
           <Content padder>
             <ScrollView style={styles.container}>
               <Text>{this.state.debugMsg}</Text>
@@ -301,7 +290,7 @@ export default class BluetoothConfig extends Component {
                           pairedDs: []
                         });
                       },
-                      (err) => { showError(err); });
+                      (err) => { Alert(err); });
                     } else {
                       BluetoothManager.enableBluetooth().then((r) => {
                         const paired = [];
@@ -323,7 +312,7 @@ export default class BluetoothConfig extends Component {
                         this.setState({
                           loading: false
                         });
-                        showError(err);
+                        Alert(err);
                       });
                     }
                   }}
@@ -367,7 +356,7 @@ export default class BluetoothConfig extends Component {
                   disabled={this.state.loading || !(this.state.bleOpend && this.state.boundAddress.length > 0 )}
                   onPress={async () => {
                     await BluetoothEscposPrinter.printerInit();
-                    await BluetoothEscposPrinter.printText('Print OKE !!!\r\n\r\n', {});
+                    await BluetoothEscposPrinter.printText('Print OK !!!\r\n\r\n', {});
                   }}
                   title="Test Print"
                 />
