@@ -41,8 +41,7 @@ To print in others screens you need use the code:
 
 ```javascript
 import {
-  BluetoothEscposPrinter,
-  BluetoothManager
+  BluetoothEscposPrinter
 } from 'react-native-bluetooth-escpos-printer';
 .
 .
